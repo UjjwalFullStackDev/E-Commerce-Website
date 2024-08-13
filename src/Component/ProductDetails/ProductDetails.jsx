@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Container, Grid, Typography, Card, CardMedia, CardContent, CardActions, Button } from '@mui/material';
-
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../Store/Slices/CartSlice';
 
 export default function ProductDetails() {
-  const _useParams = useParams()
-  let { id } = useParams()
-  // console.log(id)
+  const { id } = useParams(); // Removed unused _useParams
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
     image: '',
@@ -15,17 +15,21 @@ export default function ProductDetails() {
     description: '',
     price: '',
     category: '',
-  })
+  });
+
+  const AddToCart = (data) => {
+    // alert(data);
+    dispatch(addToCart(data));
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     axios.get('https://fakestoreapi.com/products/' + id)
       .then((res) => {
         console.log(res);
-        setState(res.data)
-      })
-  }, [])
-
+        setState(res.data);
+      });
+  }, [id]); // Added id to the dependency array
 
   return (
     <Container maxWidth="lg" sx={{ mt: 5 }}>
@@ -37,7 +41,7 @@ export default function ProductDetails() {
               image={state.image}
               alt={state.title}
               sx={{ height: '100%', width: '100%' }}
-              />
+            />
           </Grid>
           <Grid item xs={12} md={6}>
             <CardContent>
@@ -55,7 +59,7 @@ export default function ProductDetails() {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" onClick={() => AddToCart(state)}>
                 Add to Cart
               </Button>
               <Button variant="outlined" color="secondary">
@@ -66,5 +70,5 @@ export default function ProductDetails() {
         </Grid>
       </Card>
     </Container>
-  )
+  );
 }
