@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import ReactImageMagnify from 'react-image-magnify';
 import { Container, Grid, Typography, Card, CardMedia, CardContent, CardActions, Button } from '@mui/material';
 
 
@@ -33,26 +32,12 @@ export default function ProductDetails() {
       <Card>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-          <ReactImageMagnify {...{
-    smallImage: {
-        alt: 'Wristwatch by Ted Baker London',
-        width: 550,
-        height: 550,
-        src: state.image
-    },
-    largeImage: {
-        src: state.image,
-        width: 800,
-        height: 1100
-    }
-}} />
-            {/* <CardMedia
+            <CardMedia
               component="img"
               image={state.image}
               alt={state.title}
               sx={{ height: '100%', width: '100%' }}
-              
-            /> */}
+              />
           </Grid>
           <Grid item xs={12} md={6}>
             <CardContent>
